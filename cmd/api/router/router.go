@@ -11,7 +11,7 @@ func NewRouter(db *gorm.DB) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Route("/v1", func(r chi.Router) {
-		bookService := book.New(db)
+		bookService := book.NewService(db)
 
 		r.Get("/books", bookService.List)
 		r.Post("/books", bookService.Create)

@@ -9,6 +9,7 @@ services:
       db:
           condition: service_healthy
     command: [ "sh", "-c", "/book-shop/bin/migrate up && /book-shop/bin/api" ]
+    restart: on-failure
 
 
   db:
