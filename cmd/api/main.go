@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 
+	validatorUtil "book-shop/util/validator"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
@@ -16,6 +18,7 @@ const fmtDBString = "host=%s user=%s password=%s dbname=%s port=%d sslmode=disab
 
 func main() {
 	conf := config.New()
+	validator := validatorUtil.New()
 	//mux := http.NewServeMux()
 	var logLevel gormlogger.LogLevel
 	if conf.DB.Debug {
@@ -31,7 +34,7 @@ func main() {
 		return
 	}
 
-	r := router.NewRouter(db)
+	r := router.NewRouter(db, validator)
 	//http.HandleFunc("/", hello)
 	//mux.HandleFunc("/", hello)
 

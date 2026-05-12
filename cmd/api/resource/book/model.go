@@ -31,11 +31,11 @@ type DTO struct {
 }
 
 type BookRequest struct {
-	Title         string `json:"title"`
-	Author        string `json:"author"`
-	PublishedDate string `json:"published_date"`
-	ImageURL      string `json:"image_url"`
-	Description   string `json:"description"`
+	Title         string `json:"title" validate:"required,max=255"`
+	Author        string `json:"author" validate:"required,alphaspace,max=255"`
+	PublishedDate string `json:"published_date" validate:"required,datetime=2026-03-04"`
+	ImageURL      string `json:"image_url" validate:"url"`
+	Description   string `json:"description" validate:"required"`
 }
 
 func (f *BookRequest) ToBook() *Book {
