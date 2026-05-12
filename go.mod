@@ -7,6 +7,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.9.2
 	github.com/joeshaw/envdecode v0.0.0-20200121155833-099f1fc765bd
+	github.com/joho/godotenv v1.5.1
 	github.com/pressly/goose/v3 v3.27.1
 	gorm.io/driver/postgres v1.6.0
 	gorm.io/gorm v1.31.1
