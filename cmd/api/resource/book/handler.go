@@ -7,6 +7,8 @@ import (
 
 	e "book-shop/cmd/api/resource/common/err"
 
+	validatorUtil "book-shop/util/validator"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
@@ -51,7 +53,13 @@ func (service *Service) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := service.validator.Struct(bookRequest); err != nil {
-		fmt.Println(err)
+		respBody, err := json.Marshal(validatorUtil.ToErrResponse(err))
+		if err != nil {
+			e.ServerError(w, e.RespJSONEncodeFailure)
+			return
+		}
+
+		e.ValidationErrors(w, respBody)
 		return
 	}
 	newBook := bookRequest.ToBook()
@@ -100,6 +108,17 @@ func (service *Service) Update(w http.ResponseWriter, r *http.Request) {
 	bookRequest := &BookRequest{}
 	if err := json.NewDecoder(r.Body).Decode(bookRequest); err != nil {
 		e.ServerError(w, e.RespJSONDecodeFailure)
+		return
+	}
+
+	if err := service.validator.Struct(bookRequest); err != nil {
+		respBody, err := json.Marshal(validatorUtil.ToErrResponse(err))
+		if err != nil {
+			e.ServerError(w, e.RespJSONEncodeFailure)
+			return
+		}
+
+		e.ValidationErrors(w, respBody)
 		return
 	}
 
